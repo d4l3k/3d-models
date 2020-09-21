@@ -23,6 +23,8 @@ usb_width = 15;
 usb_position = 0;
 row_spacing = 19;
 
+screw_diameter = 3;
+
 module hole() {
   circle(r=hole_size, $fs=0.1);
 }
@@ -66,7 +68,7 @@ circle(r = 2, $fn=50);
 
 module logo() { 
 
-translate([side_padding, board_height+side_padding+4.5, plate_to_top])
+translate([side_padding, board_height+side_padding+4.5, plate_to_top+plate_thickness-0.5])
 linear_extrude(height=5)
 scale(0.65)
 text("JINB0AT", font="IBM Plex Mono:style=Regular");
@@ -80,10 +82,24 @@ module inner() {
   square([board_width, board_height]);
 }
 
+module screw_hole() {
+  cylinder(d=screw_diameter, plate_to_top, $fn=6);
+}
+
 
 difference() {
 keyboard();
 logo();
+  
+  translate([side_padding/2, side_padding/2]) {
+    screw_hole();
+    translate([0, board_height+side_padding]) screw_hole();
+    
+    translate([board_width + side_padding, 0]) {
+      screw_hole();
+      translate([0, board_height+side_padding]) screw_hole();
+    }
+  }
 }
 
 
