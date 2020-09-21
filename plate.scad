@@ -1,0 +1,1 @@
+import("Downloads/MMRGB_Staggered_plate_v2.stl", convexity=3, center=true);
