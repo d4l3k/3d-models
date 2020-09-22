@@ -7,7 +7,7 @@ adapter_length = 45;
 
 beam_size = 20;
 base_thickness = 8;
-nut_size = 6;
+nut_size = 7.1;
 hole_size = 4.5;
 nut_depth = 2;
 
