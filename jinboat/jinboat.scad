@@ -1,3 +1,5 @@
+include <BOSL/constants.scad>
+use <BOSL/masks.scad>
 
 key_width = 16.05;
 key_spacing = key_width + 3;
@@ -6,11 +8,8 @@ columns = 10;
 
 padding = 5;
 
-holes_x = 5;
-holes_y = 3;
-hole_size = 1;
-corner_radius = 7;
-inner_corner_radius = 2;
+corner_radius = 4;
+inner_corner_radius = 1;
 thickness = 3;
 outer_padding = 1;
 plate_thickness = 1.5;
@@ -52,33 +51,19 @@ module body() {
   outline();
 }
 
-module edged () {
-minkowski()
-{
-  body();
-
-hull() {
-  translate([0,0,1])
-rotate_extrude(convexity = 10, $fn=50)
-translate([2, 0, 0])
-circle(r = 2, $fn=50);
-}
-}
-}
-
 module logo() { 
 
 translate([side_padding, board_height+side_padding+4.5, plate_to_top+plate_thickness-0.5])
 linear_extrude(height=5)
 scale(0.65)
-text("JINB0AT", font="IBM Plex Mono:style=Regular");
+text("Djinn", font="IBM Plex Mono:style=Regular");
   
 }
 
 module inner() {
    translate([side_padding, side_padding])
-  offset(1, $fn=50)
-  offset(-1, $fn=50)
+  offset(inner_corner_radius, $fn=50)
+  offset(-inner_corner_radius, $fn=50)
   square([board_width, board_height]);
 }
 
@@ -100,6 +85,8 @@ logo();
       translate([0, board_height+side_padding]) screw_hole();
     }
   }
+  
+  fillet();
 }
 
 
@@ -113,9 +100,9 @@ module keyboard() {
   linear_extrude(plate_to_top + plate_thickness)
     minkowski() {
       difference() {
-        offset(4, $fn=50)
-          offset(-8, $fn=50)
-            offset(4, $fn=50)
+        offset(corner_radius, $fn=50)
+          offset(-corner_radius*2, $fn=50)
+            offset(corner_radius, $fn=50)
               outline();
         
         inner();
@@ -127,5 +114,96 @@ module keyboard() {
     linear_extrude(height=plate_thickness)
       layoutfile();
 }  
+
+outer_fillet = 2;
+inner_fillet = 1;
+
+$fn=50;
+
+module fillet() {
+  translate([0,0, plate_thickness+plate_to_top]) {
+    // outer fillet
+    // sides
+    fillet_mask_x(l=200, r=outer_fillet, align=V_RIGHT, $fn=50);
+    fillet_mask_y(l=300, r=outer_fillet, $fn=50);
+    translate([board_width+side_padding*2, 0])
+    fillet_mask_y(l=300, r=outer_fillet, $fn=50);
+      
+    translate([0, board_height+side_padding+top_padding]) {
+      translate([0,lip_height])
+      fillet_mask_x(l=200, r=outer_fillet, align=V_RIGHT, $fn=50);
+      
+      
+      translate([lip_size+lip_height+corner_radius*0.41,0])
+      fillet_mask_x(l=200, r=outer_fillet, align=V_RIGHT, $fn=50);
+      
+      translate([lip_size,lip_height])
+      rotate(-45)
+      fillet_mask_x(l=lip_height*sqrt(2)-corner_radius*0.41, r=outer_fillet, align=V_RIGHT, $fn=50);
+    }
+    
+    // corners
+    translate([corner_radius, corner_radius])
+    corner_fillet();
+    
+    translate([board_width+side_padding*2-corner_radius, corner_radius])
+    rotate(90)
+    corner_fillet();
+    
+    translate([board_width+side_padding*2-corner_radius, board_height+side_padding+top_padding-corner_radius])
+    rotate(180)
+    corner_fillet();
+    
+    translate([corner_radius, board_height+side_padding+top_padding+lip_height-corner_radius])
+    rotate(270)
+    corner_fillet();
+    
+    translate([lip_size-corner_radius*0.41, board_height+side_padding+top_padding+lip_height-corner_radius])
+    rotate(180)
+    corner_fillet(45);
+    
+    translate([lip_size+lip_height+corner_radius*0.42, board_height+side_padding+top_padding+corner_radius])
+    fillet_hole_mask(r=corner_radius, fillet=outer_fillet, $fn=100);
+    
+    // inner fillet
+    translate([side_padding+inner_corner_radius, side_padding])
+    fillet_mask_x(l=board_width-inner_fillet*2, r=inner_fillet, align=V_RIGHT, $fn=50);
+    translate([side_padding+inner_corner_radius, side_padding+board_height])
+    fillet_mask_x(l=board_width-inner_fillet*2, r=inner_fillet, align=V_RIGHT, $fn=50);
+    translate([side_padding, side_padding+inner_corner_radius])
+    fillet_mask_y(l=board_height-inner_fillet*2, r=inner_fillet, align=V_BACK, $fn=50);
+    translate([side_padding+board_width, side_padding+inner_corner_radius])
+    fillet_mask_y(l=board_height-inner_fillet*2, r=inner_fillet, align=V_BACK, $fn=50);
+    
+    // corners
+    translate([side_padding+inner_corner_radius, side_padding+inner_corner_radius])
+    inner_corner_fillet();
+    
+    translate([side_padding-inner_corner_radius+board_width, side_padding+inner_corner_radius])
+    inner_corner_fillet();
+    
+    translate([side_padding-inner_corner_radius+board_width, side_padding-inner_corner_radius+board_height])
+    inner_corner_fillet();
+    
+    translate([side_padding+inner_corner_radius, side_padding-inner_corner_radius+board_height])
+    inner_corner_fillet();
+  }
+}
+
+module inner_corner_fillet() {
+  fillet_hole_mask(r=inner_corner_radius, fillet=inner_fillet);
+}
+
+module corner_fillet(ang=90) {
+
+rotate(-90)
+difference() {
+    fillet_cylinder_mask(r=corner_radius, fillet=outer_fillet, $fn=100);
+angle_pie_mask(ang=360-ang, d=20, l=10);
+}
+}
+
+
+
 
 //layoutfile();
