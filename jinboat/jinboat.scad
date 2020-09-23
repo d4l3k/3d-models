@@ -23,6 +23,7 @@ usb_position = 0;
 row_spacing = 19;
 
 screw_diameter = 3;
+screw_offset = 0.5;
 
 module hole() {
   circle(r=hole_size, $fs=0.1);
@@ -74,23 +75,25 @@ module screw_hole() {
   cylinder(d=screw_diameter, plate_to_top, $fn=6);
 }
 
-difference() {
-keyboard();
-logo();
-  
-  translate([side_padding/2, side_padding/2]) {
-    screw_hole();
-    translate([0, board_height+side_padding]) screw_hole();
-    
-    translate([board_width + side_padding, 0]) {
-      screw_hole();
-      translate([0, board_height+side_padding]) screw_hole();
-    }
-  }
-  
-  fillet();
-}
 
+module top() {
+  difference() {
+    keyboard();
+    logo();
+    
+    translate([side_padding/2+screw_offset, side_padding/2+screw_offset]) {
+      screw_hole();
+      translate([0, board_height+side_padding-screw_offset*2]) screw_hole();
+      
+      translate([board_width + side_padding-screw_offset*2, 0]) {
+        screw_hole();
+        translate([0, board_height+side_padding-screw_offset*2]) screw_hole();
+      }
+    }
+    
+    fillet();
+  }
+}
 
 
 
@@ -205,15 +208,87 @@ module inner_corner_fillet() {
 }
 
 module corner_fillet(ang=90) {
-
-rotate(-90)
-difference() {
-    fillet_cylinder_mask(r=corner_radius, fillet=outer_fillet, $fn=100);
-angle_pie_mask(ang=360-ang, d=20, l=10);
+  rotate(-90)
+  difference() {
+      fillet_cylinder_mask(r=corner_radius, fillet=outer_fillet, $fn=100);
+  angle_pie_mask(ang=360-ang, d=20, l=10);
+  }
 }
+front_thickness = 6;
+bottom_thickness = 15;
+pcb_space = 6.5;
+
+bottom_height = board_height+side_padding+top_padding+lip_height;
+bottom_width = side_padding*2 + board_width;
+
+module bottom_outline() {
+  offset(corner_radius, $fn=50)
+  offset(-corner_radius*2, $fn=50)
+  offset(corner_radius, $fn=50)
+  square([bottom_width, bottom_height]);
 }
 
+usb_position = 35;
+usb_down = 9.3;
+usb_size_x = 13;
+usb_size_y = 8;
+usb_radius = 2;
+
+screw_head_diameter = 6;
+screw_head_depth = 3;
+
+module bottom_screw_hole() {
+  cylinder(d=screw_diameter*1.1, bottom_thickness+1, $fn=50);
+  cylinder(d=screw_head_diameter, bottom_thickness-front_thickness + screw_head_depth, $fn=50);
+}
+
+module bottom() {
+  difference() {
+    linear_extrude(bottom_thickness)
+    bottom_outline();
+    
+    // slant
+    translate([bottom_width, 0])
+    rotate([0, 270, 0])
+    linear_extrude(bottom_width)
+    polygon([[0, 0], [0, bottom_height], [bottom_thickness-front_thickness, 0]]);
+    
+    // inner space    
+    space_height = board_height + side_padding;
+    translate([bottom_width-side_padding, side_padding, bottom_thickness])
+    rotate([0, 270, 0])
+    linear_extrude(board_width)
+    #polygon([
+      [1, 0], 
+      [1, space_height], 
+      [-bottom_thickness*(space_height/bottom_height), space_height],
+      [-front_thickness, 0],
+    ]);
+    
+    // usb port
+    translate([usb_position-usb_size_x/2, bottom_height+1, bottom_thickness-usb_down-usb_size_y/2])
+    rotate([90, 0])
+    linear_extrude(bottom_height - board_height-side_padding*2+1)
+    offset(usb_radius, $fn=50)
+    offset(-usb_radius, $fn=50)
+    square([usb_size_x, usb_size_y]);
+    
+    // screw holes
+    translate([side_padding/2+screw_offset, side_padding/2+screw_offset]) {
+      bottom_screw_hole();
+      translate([0, board_height+side_padding-screw_offset*2]) bottom_screw_hole();
+      
+      translate([board_width + side_padding-screw_offset*2, 0]) {
+        bottom_screw_hole();
+        translate([0, board_height+side_padding-screw_offset*2]) bottom_screw_hole();
+      }
+    }
+  }
+}
+
+top();
+translate([0, 0, -bottom_thickness]) 
+bottom();
 
 
 
-//layoutfile();
