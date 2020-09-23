@@ -16,7 +16,7 @@ plate_thickness = 1.5;
 
 top_padding = 8.65;
 side_padding = 7.5;
-plate_to_top = 7.5;
+plate_to_top = 7.5+1;
 
 usb_width = 15;
 usb_position = 0;
@@ -28,8 +28,8 @@ module hole() {
   circle(r=hole_size, $fs=0.1);
 }
 
-board_height = 76;
-board_width = 114;
+board_height = 76+1;
+board_width = 114+1;
 lip_size = 50;
 lip_height = 8.5;
 
@@ -52,12 +52,15 @@ module body() {
 }
 
 module logo() { 
-
-translate([side_padding, board_height+side_padding+4.5, plate_to_top+plate_thickness-0.5])
-linear_extrude(height=5)
-scale(0.65)
-text("Djinn", font="IBM Plex Mono:style=Regular");
-  
+  font_scale = 0.55;
+  translate([side_padding-inner_fillet, board_height+side_padding+4.5, plate_to_top+plate_thickness-1])
+    linear_extrude(height=2)
+      scale(font_scale) {
+        font = "Egge Sans:style=Bold";
+        text("t", font=font);
+        translate([7.5+1/font_scale, 0])
+          text("rifØrce", font=font);
+      }
 }
 
 module inner() {
@@ -70,7 +73,6 @@ module inner() {
 module screw_hole() {
   cylinder(d=screw_diameter, plate_to_top, $fn=6);
 }
-
 
 difference() {
 keyboard();
@@ -109,8 +111,16 @@ module keyboard() {
       }
       //circle(r=1, $fn=50);
     }
+    
+  translate([side_padding, side_padding])
+  difference() {
+    inner_lip = 2;
+    cube([board_width, board_height, plate_thickness]);
+    translate([inner_lip/2, inner_lip/2, -plate_thickness*0.5])
+    cube([board_width-inner_lip, board_height-inner_lip, plate_thickness*2]);
+  }
 
-  translate([side_padding-0.1, side_padding-0.3, 0])
+  translate([side_padding-0.1+0.5, side_padding-0.3+0.5, 0])
     linear_extrude(height=plate_thickness)
       layoutfile();
 }  
