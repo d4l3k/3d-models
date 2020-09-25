@@ -1,13 +1,6 @@
 include <BOSL/constants.scad>
 use <BOSL/masks.scad>
 
-key_width = 16.05;
-key_spacing = key_width + 3;
-rows = 3;
-columns = 10;
-
-padding = 5;
-
 corner_radius = 4;
 inner_corner_radius = 1;
 thickness = 3;
@@ -17,10 +10,6 @@ plate_thickness = 1.5;
 top_padding = 8.65;
 side_padding = 7.5;
 plate_to_top = 7.5+1;
-
-usb_width = 15;
-usb_position = 0;
-row_spacing = 19;
 
 screw_diameter = 3;
 screw_offset = 0.5;
@@ -214,7 +203,7 @@ module corner_fillet(ang=90) {
   angle_pie_mask(ang=360-ang, d=20, l=10);
   }
 }
-front_thickness = 6;
+front_thickness = 6.9;
 bottom_thickness = 15;
 pcb_space = 6.5;
 
@@ -228,7 +217,8 @@ module bottom_outline() {
   square([bottom_width, bottom_height]);
 }
 
-usb_position = 35;
+usb_position = 32.23+8.25/2; // distance from side to inner side of usb connector + width of jack/2
+//usb_position = 35;
 usb_down = 9.3;
 usb_size_x = 13;
 usb_size_y = 8;
@@ -286,8 +276,8 @@ module bottom() {
   }
 }
 
-top();
-translate([0, 0, -bottom_thickness]) 
+//stop();
+//translate([0, 0, -bottom_thickness]) 
 bottom();
 
 
