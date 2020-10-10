@@ -41,6 +41,9 @@ beam();
 
 rotate(-45)
 beam();
+  
+  translate([0, -vesa/2-beam_size/2, 0])
+  square([vesa/2, beam_size]);
 }
 
 module vesa_body() {
@@ -56,6 +59,13 @@ translate([-vesa/2, -vesa/2])
 hole();  
  translate([-vesa/2, vesa/2])
 hole();  
+  
+  text_depth = 1;
+  #translate([-center_size/2+2, beam_size/2, base_thickness-text_depth])
+  rotate([0,0, 0])
+  linear_extrude(text_depth*2)
+  scale(0.7)
+  text("Tristan Rice", "Open Sans Condensed:style=Light");
 }
 }
 
@@ -110,8 +120,8 @@ translate([0, vesa_center])
 vesa_body();
 }
 
-hdmi_height = 13;
-hdmi_width = 22;
+hdmi_height = 13+1;
+hdmi_width = 22+1;
 hdmi_pos_y = 72;
 hdmi_pos_x = 9;
 
