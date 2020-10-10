@@ -203,9 +203,9 @@ module corner_fillet(ang=90) {
   angle_pie_mask(ang=360-ang, d=20, l=10);
   }
 }
-front_thickness = 6.9;
-bottom_thickness = 15;
-pcb_space = 6.5;
+front_thickness = 6.5;
+bottom_thickness = 15.5;
+bottom_size = 1;
 
 bottom_height = board_height+side_padding+top_padding+lip_height;
 bottom_width = side_padding*2 + board_width;
@@ -251,8 +251,8 @@ module bottom() {
     #polygon([
       [1, 0], 
       [1, space_height], 
-      [-bottom_thickness*(space_height/bottom_height), space_height],
-      [-front_thickness, 0],
+      [-usb_size_y/2 - usb_down, space_height],
+      [-front_thickness+bottom_size, 0],
     ]);
     
     // usb port
