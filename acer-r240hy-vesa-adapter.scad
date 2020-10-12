@@ -9,6 +9,8 @@ nut_depth = 2;
 
 $fn = 100;
 
+vesa_rotation = 20;
+
 
 module hexagon(size, height) {
   boxWidth = size/1.75;
@@ -42,8 +44,6 @@ beam();
 rotate(-45)
 beam();
   
-  translate([0, -vesa/2-beam_size/2, 0])
-  square([vesa/2, beam_size]);
 }
 
 module vesa_body() {
@@ -117,6 +117,7 @@ translate([-insert_width/2+side_tab_length, 0])
 cube([insert_width-2*side_tab_length, vesa_center, base_thickness]);
 
 translate([0, vesa_center])
+rotate([0, 0, vesa_rotation])
 vesa_body();
 }
 
