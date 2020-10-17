@@ -276,7 +276,7 @@ module bottom() {
   }
 }
 
-//stop();
+top();
 //translate([0, 0, -bottom_thickness]) 
 bottom();
 
