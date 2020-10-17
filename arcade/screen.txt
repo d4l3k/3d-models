@@ -1,0 +1,15 @@
+Screen is offset
+
+
+bezel
+
+* right: 6mm
+* left: 3.5mm
+* top: 4.5
+* bottom: 9mm
+
+
+offsets:
+
+* right: 2.5mm / 2 = 1.25mm
+* down: 3.5mm / 2 = 1.75mm
