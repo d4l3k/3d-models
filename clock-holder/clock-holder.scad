@@ -1,4 +1,4 @@
-clock_diameter = 2 + 15.0/16;
+clock_diameter = 2.9375;
 width = 3.5;
 depth = 0.75;
 height = 4;
@@ -8,10 +8,11 @@ base_height = 0.5;
 base_depth = 3;
 base_angle = 15;
 
-in_to_cm = 2.54;
+in_to_mm = 2.54 * 10;
 
-$fn = 100;
+$fn = 200;
 
+module model() {
 difference() {
   // clock frame
   translate([0, 0, height/2])
@@ -28,3 +29,7 @@ difference() {
 translate([0, 0, height])
 rotate([base_angle, 0, 0])
 cube([base_width, base_depth, base_height], center=true);
+}
+
+scale(in_to_mm)
+model();
