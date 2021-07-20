@@ -1,5 +1,7 @@
 use <roundedcube.scad>;
 
+$fn=100;
+
 leg_offset = 27.5;
 leg_height = 25;
 leg_width = 4;
@@ -54,5 +56,5 @@ for (x = [-leg_offset, leg_offset]) {
   }
 }
 }
-top();
-//bottom();
+//top();
+bottom();
