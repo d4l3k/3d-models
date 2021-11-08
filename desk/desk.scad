@@ -8,7 +8,7 @@ leg_width = 4;
 leg_inner = 3;
 
 
-post_width = 2.9;
+post_width = 2.65;
 
 
 module leg() {
@@ -56,5 +56,5 @@ for (x = [-leg_offset, leg_offset]) {
   }
 }
 }
-//top();
+//#top();
 bottom();
