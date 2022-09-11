@@ -1,3 +1,5 @@
+include <Chamfer.scad>;
+
 $fn=100;
 
 thread = 1/4 * 2.54*10;
@@ -16,14 +18,14 @@ flange_size = 2.54*10;
 flange_height = 2.54*10;
 
 module base() {
-  cylinder(puck_h, r=puck_d/2);
+  chamferCylinder(puck_h, r=puck_d/2, $fn=250);
   
   translate([-(puck_d+flange_size*2)/2, -flange_size, 0])
-  cube([puck_d+flange_size*2, flange_size*2, flange_height]);
+  chamferCube([puck_d+flange_size*2, flange_size*2, flange_height]);
   
   for (i = [-1, 1]) {
-    translate([i * pin_spacing/2, 0, puck_h])
-    cylinder(pin_depth, r=pin_d/2);
+    translate([i * pin_spacing/2, 0, puck_h-pin_depth])
+    chamferCylinder(pin_depth*2, r=pin_d/2);
   }
 }
 difference() {
@@ -34,7 +36,7 @@ difference() {
     cylinder(1000, r=thread/2);
   }
   translate([0, 0, -recess_h])
-  cylinder(recess_h*2, r=recess_d/2);
+  chamferCylinder(recess_h*2, r=recess_d/2);
 }
   
 
