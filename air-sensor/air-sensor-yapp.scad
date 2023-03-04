@@ -47,7 +47,7 @@ include <../YAPP_Box/library/YAPPgenerator_v18.scad>
                                  LEFT
 */
 
-printBaseShell      = true;
+printBaseShell      = false;
 printLidShell       = true;
 
 // Edit these parameters for your own board dimensions
@@ -131,8 +131,8 @@ pcbStands = [
 // (5) = { yappRectangle | yappCircle }
 // (6) = { yappCenter }
 cutoutsLid =  [
-                    [pcbLength-1, -3, 51, 7, 0, yappRectangle]  ,
-                     [5, -2, screen_inner_height, screen_inner_width, 0, yappRectangle]  
+                   // [pcbLength-1, -3, 51, 7, 0, yappRectangle]  ,
+                    // [5, -2, screen_inner_height, screen_inner_width, 0, yappRectangle]  
 
                //   , [20, 50, 10, 20, 0, yappRectangle, yappCenter]
                //   , [50, 50, 10, 2, 0, yappCircle]
@@ -227,7 +227,7 @@ cutoutsRight =  [
 // (8) = {polygon points}}
 cutoutsGrill = [
                  [0,  0, 45, pcbLength, 2, 3, 45, "base"]
-                 //,[0,  0, 45, pcbLength, 2, 3, 50, "lid"]
+                 ,[0,  0, 45, pcbLength, 2, 3, 50, "lid"]
                ];
 
 //-- connectors 
