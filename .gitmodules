@@ -1,0 +1,3 @@
+[submodule "YAPP_Box"]
+	path = YAPP_Box
+	url = https://github.com/mrWheel/YAPP_Box.git
