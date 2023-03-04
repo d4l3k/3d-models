@@ -11,8 +11,7 @@ translate([-wall_thickness, -wall_thickness, -wall_thickness])
 
 difference() {
   {
-    cube([case_length, case_height, wall_thickness+case_depth]);
-    cube([case_length, case_height, wall_thickness+case_depth]);
+    cube([case_length, case_height, wall_thickness+case_depth]);cube([case_length, case_height, wall_thickness+case_depth]);
 
   }
   
