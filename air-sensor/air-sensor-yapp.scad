@@ -19,6 +19,12 @@
 
 include <2.7in-epaper-hat.scad>
 
+// TODO:
+// * raise screen 1mm
+// * rotate screen 180 deg
+// * shift air sensor north
+// * move temperature sensor to side
+
 
 include <../YAPP_Box/library/YAPPgenerator_v18.scad>
 
@@ -47,8 +53,9 @@ include <../YAPP_Box/library/YAPPgenerator_v18.scad>
                                  LEFT
 */
 
-printBaseShell      = false;
-printLidShell       = true;
+
+printBaseShell      = true;
+printLidShell       = false;
 
 // Edit these parameters for your own board dimensions
 wallThickness       = 2.0;
@@ -62,7 +69,7 @@ lidWallHeight       = 14;
 // Make sure this isn't less than lidWallHeight
 ridgeHeight         = 4;
 ridgeSlack          = 0.2;
-roundRadius         = 5.0;
+roundRadius         = 2.0;
 
 // How much the PCB needs to be raised from the base
 // to leave room for solderings and whatnot
@@ -114,10 +121,12 @@ pcbStands = [
                 //[5, 5, 3, 5, 11, yappBoth, yappPin] 
             //   ,[5,            pcbWidth-5,  5, 4, 10, yappBoth, yappPin. yappAllCorners]
             //   ,[pcbLength-5,  5,           5, 4, 11, yappBoth, yappPin, yappBackRight]
-            [pcbLength-17.2, pcbWidth+1.6, 24, 4, 8, yappBaseOnly, yappPin],
-            [31, pcbWidth+1.6, 24, 4, 8, yappBaseOnly, yappHole],
-            [31, -1.6, 24, 4, 8, yappBaseOnly, yappHole],
-            [pcbLength-4, -1.6, 24, 4, 8, yappBaseOnly, yappHole],
+            [pcbLength-17.2, pcbWidth+1.6, 25, 4, 8, yappBaseOnly, yappHole],
+            [31, pcbWidth+1.6, 25, 4, 8, yappBaseOnly, yappHole],
+            [15.15, -1.9, 25, 4, 8, yappBaseOnly, yappPin],
+            [pcbLength-2, -1.9, 25, 4, 8, yappBaseOnly, yappPin],
+            [-5, -1.9, 25, 4, 8, yappBaseOnly, yappHole],
+
 
 
              ];     
@@ -131,8 +140,8 @@ pcbStands = [
 // (5) = { yappRectangle | yappCircle }
 // (6) = { yappCenter }
 cutoutsLid =  [
-                   // [pcbLength-1, -3, 51, 7, 0, yappRectangle]  ,
-                    // [5, -2, screen_inner_height, screen_inner_width, 0, yappRectangle]  
+                   [-7.75, -3.5, 51, 6, 0, yappRectangle]  ,
+                     [6.8, 4, screen_inner_height, screen_inner_width, 0, yappRectangle]  
 
                //   , [20, 50, 10, 20, 0, yappRectangle, yappCenter]
                //   , [50, 50, 10, 2, 0, yappCircle]
@@ -165,7 +174,7 @@ cutoutsBase =   [
 // (6) = { yappCenter }
 cutoutsFront =  [
                   [35, -5, 10, 4, 0, yappRectangle]               // org
-                  ,[5, -2,  10, 7, 0, yappRectangle]               // org
+              //    ,[5, -2,  10, 7, 0, yappRectangle]               // org
 
                  // [25, 3, 10, 10, 0, yappRectangle, yappCenter]  // center
              //    ,  [60, 10, 15, 6, 0, yappCircle]                 // circle
@@ -180,7 +189,7 @@ cutoutsFront =  [
 // (5) = { yappRectangle | yappCircle }
 // (6) = { yappCenter }
 cutoutsBack =   [
-                  [25, 0, 20, 7, 0, yappRectangle]               // org
+                  [20, 0, 30, 7, 0, yappRectangle]               // org
 
            //         [0, 0, 10, 8, 0, yappRectangle]                // org
             //      , [25, 18, 10, 6, 0, yappRectangle, yappCenter]  // center
@@ -196,6 +205,8 @@ cutoutsBack =   [
 // (5) = { yappRectangle | yappCircle }
 // (6) = { yappCenter }
 cutoutsLeft =   [
+              [47.5, -2,  10, 7, 0, yappRectangle]               // org
+
                   //  [25, 0, 6, 20, 0, yappRectangle]                       // org
                   //, [pcbLength-35, 0, 20, 6, 0, yappRectangle, yappCenter] // center
                   //, [pcbLength/2, 10, 20, 6, 0, yappCircle]                // circle
@@ -210,6 +221,7 @@ cutoutsLeft =   [
 // (5) = { yappRectangle | yappCircle }
 // (6) = { yappCenter }
 cutoutsRight =  [
+
                  //   [10, 0, 9, 5, 0, yappRectangle]                // org
                  // , [40, 0, 9, 5, 0, yappRectangle, yappCenter]    // center
                  // , [60, 0, 9, 5, 0, yappCircle]                   // circle
@@ -227,7 +239,7 @@ cutoutsRight =  [
 // (8) = {polygon points}}
 cutoutsGrill = [
                  [0,  0, 45, pcbLength, 2, 3, 45, "base"]
-                 ,[0,  0, 45, pcbLength, 2, 3, 50, "lid"]
+                 //,[0,  0, 45, pcbLength, 2, 3, 50, "lid"]
                ];
 
 //-- connectors 
@@ -309,9 +321,15 @@ module lidHookInside()
 {
   //echo("lidHookInside(original) ..");
   
-  translate([8, 62, -2])
-  rotate([180, 0, 0])
+  translate([89, 6.5, -2.7])
+  rotate([180, 0, 180])
   %eink();
+  
+  translate([2, 63, -5-lidPlaneThickness])
+  cube([10, 2, 5]);
+    translate([2, 61, -5-lidPlaneThickness])
+  cube([10, 4, 2]);
+
 
   
 } // lidHookInside(dummy)
@@ -331,10 +349,10 @@ module baseHookInside()
   
   translate([pcbLength-55, 0, 0]) {
     //echo("baseHookInside(original) ..");
-    translate([68.8, 10, 1])
-    cube([3, 25, 15]);
+    translate([32, 7.2, 1])
+    cube([25, 3, 15]);
     
-    translate([53.5, 45, 1])
+    translate([54, 45, 1])
     cube([2, 15, 4]);
     translate([60, 41, 1])
     cube([15, 2, 6]);
@@ -348,8 +366,8 @@ module baseHookInside()
 
 
 
-  translate([72, 10, 0])
-  rotate([90, 0, 90])
+  translate([32, 7, 0])
+  rotate([90, 0, 0])
   %import("3660 BME680.stl");
 
   translate([56, 61, 1])
@@ -361,11 +379,14 @@ module baseHookInside()
   
   
       
-    translate([39, 10, 1])
-    cube([2, 50, 6]);
+    translate([38.5, 30, 1])
+    cube([2, 35, 6]);
+    translate([3, 12.5, 1])
+    cube([33, 2, 6]);
+
 
   
-  translate([3, 10, basePlaneThickness+1])
+  translate([3, 15, basePlaneThickness+1])
   %import("4632 PMSA003I.stl");
 
 
