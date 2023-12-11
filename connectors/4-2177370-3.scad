@@ -65,15 +65,22 @@ module receptacles() {
 
 }
 
+module base () {
+            translate([-14, 6.3, 1])
+    cube([20, 4.2, 2], center=true);
+
+}
+
 difference() {
     translate([2, 6.3, -0.75])
     rotate([90, 0, 90])
     translate([-100, -100, 0])
     import("./c-4-2177370-3-d-3d.stl");
+
+    
+    
     receptacles();
     
-    translate([-14, 6.3, 1])
-    cube([20, 4.2, 2], center=true);
 
 }
 

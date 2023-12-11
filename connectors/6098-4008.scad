@@ -3,7 +3,7 @@
 // 6098-5594.stp
 
 
-
+receptacle_tol = 0.1;
 
 
 module pyramid() {
@@ -33,14 +33,14 @@ module receptacle15 () {
 
 module receptacle064 () {
     // tab hole
-    cube([10, 0.64, 0.64], center=true);
+    cube([10, 0.64+receptacle_tol, 0.64+receptacle_tol], center=true);
 
     // wire hole
     translate([-42, 0, -0.15])
     cube([80, 1.8, 2.7], center=true);
 
     // taper
-    translate([1, 0, 0])
+    translate([0.5, 0, 0])
     scale([2, 1])
     rotate([0, -90, 0])
     pyramid();

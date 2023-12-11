@@ -3,7 +3,7 @@
 // 6098-5594.stp
 
 
-
+receptacle_tolerance = 0.1;
 
 
 module pyramid() {
@@ -18,14 +18,14 @@ polyhedron(
 
 module receptacle15 () {
     // tab hole
-    cube([10, 1.5, 0.64], center=true);
+    cube([10, 1.5+receptacle_tolerance, 0.64+receptacle_tolerance], center=true);
 
     // wire hole
     translate([-12, 0, -0.4])
     cube([20, 2.8, 2.8], center=true);
 
     // taper
-    translate([1, 0, 0])
+    translate([0.5, 0, 0])
     scale([2, 2])
     rotate([0, -90, 0])
     pyramid();
@@ -33,14 +33,14 @@ module receptacle15 () {
 
 module receptacle064 () {
     // tab hole
-    cube([10, 0.64, 0.64], center=true);
+    cube([10, 0.64+receptacle_tolerance, 0.64+receptacle_tolerance], center=true);
 
     // wire hole
     translate([-12, 0, -0.15])
     cube([20, 1.8, 2.7], center=true);
 
     // taper
-    translate([1, 0, 0])
+    translate([0.5, 0, 0])
     scale([2, 1])
     rotate([0, -90, 0])
     pyramid();
@@ -73,8 +73,8 @@ module receptacles() {
 }
 
 difference() {
-    //translate([-106.1, -91.6, -7.9])
-    import("./6098-5594.stl");
+    translate([-106.1, -91.6, -7.9])
+    import("./6098-5604-prusa.stl");
     receptacles();
 
 }
