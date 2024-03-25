@@ -1,5 +1,6 @@
 
 $fn=100;
+tol = 0.1;
 
 module base() {
     translate([55.0347-2.5, -52.8066+110-2.5, 23])
@@ -26,24 +27,28 @@ module extension() {
 
 
 difference() {
-base();
+    base();
 
 
-for (x = [6, 85]) {
-    for (y = [9.5, 95.5]) {
-        translate([x, y, 8.5+3])
-        #cube([6, 6, 17], center=true);
+    for (x = [6, 85]) {
+        for (y = [9.5, 95.5]) {
+            translate([x, y, 8.5+3])
+            #cube([6, 6, 17], center=true);
+        }
     }
-}
 
 
-translate([0, 0, 20.5])
-cube([105, 105, 3]);
+    translate([0, 0, 20.5])
+    cube([105, 105, 3]);
 
-translate([76, 90, 11])
-#cube([30, 2, 10]);
+    translate([76, 90, 11])
+    #cube([30, 2, 10]);
 
-top_pcb();
+    minkowski()
+    {
+      top_pcb();
+      cube([tol*2,tol*2,tol*2], center=true);
+    }
 }
 
     pcb_height = 25.37;
@@ -100,4 +105,4 @@ module pegs() {
 
 pegs();
 
-//top_pcb();
+#top_pcb();
