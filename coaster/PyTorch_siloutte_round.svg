@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 90.3 109.1"
+   enable-background="new 0.6 1067.9 90.3 109.1"
+   xml:space="preserve"
+   sodipodi:docname="PyTorch_siloutte_round.svg"
+   width="90.300003"
+   height="109.1"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs1"><inkscape:path-effect
+     effect="fillet_chamfer"
+     id="path-effect2"
+     is_visible="true"
+     lpeversion="1"
+     nodesatellites_param="F,0,0,1,0,0,0,1 @ F,0,0,1,0,8.5810639,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1 @ F,0,0,1,0,0,0,1"
+     radius="0"
+     unit="px"
+     method="auto"
+     mode="F"
+     chamfer_steps="1"
+     flexible="false"
+     use_knot_distance="true"
+     apply_no_radius="true"
+     apply_with_radius="true"
+     only_selected="false"
+     hide_knots="false" /></defs><sodipodi:namedview
+   id="namedview1"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:zoom="5.5570093"
+   inkscape:cx="44.358393"
+   inkscape:cy="59.564414"
+   inkscape:window-width="1879"
+   inkscape:window-height="1233"
+   inkscape:window-x="0"
+   inkscape:window-y="0"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="Layer_1" />
+<g
+   id="g1"
+   transform="translate(-0.65626175,-1067.6875)">
+	<path
+   fill="#ee4c2c"
+   d="m 77.6,1099.6 -25.741804,-25.8228 a 8.5676034,8.5676034 0.0449731 0 0 -12.125924,-0.01 L 14,1099.5 c -17.7,17.7 -17.7,46.3 0,64 17.7,17.7 46.3,17.7 63.7,0 17.6,-17.7 17.6,-46.1 -0.1,-63.9 z"
+   id="path1"
+   sodipodi:nodetypes="ccsscc"
+   inkscape:path-effect="#path-effect2"
+   inkscape:original-d="M 77.6,1099.6 45.8,1067.7 14,1099.5 c -17.7,17.7 -17.7,46.3 0,64 17.7,17.7 46.3,17.7 63.7,0 17.6,-17.7 17.6,-46.1 -0.1,-63.9 z" />
+	
+</g>
+</svg>
