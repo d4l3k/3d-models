@@ -3,6 +3,7 @@
 set -ex
 
 PEOPLE=(
+    ""
     tristanr
     cpio
     chienchin
@@ -22,7 +23,6 @@ PEOPLE=(
     yifanmao
     yifu
     gchanan
-
     clr
 )
 
